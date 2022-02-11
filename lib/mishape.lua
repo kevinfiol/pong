@@ -39,17 +39,23 @@ local isArray = function (x)
 end
 
 local MAP = {
+    ['nil'] = function(x) return type(x) == 'nil' end,
+    ['function'] = function (x) return type(x) == 'function' end,
     notnil = function (x) return type(x) ~= 'nil' end,
     number = function (x) return type(x) == 'number' end,
     string = function (x) return type(x) == 'string' end,
     boolean = function (x) return type(x) == 'boolean' end,
     table = function (x) return type(x) == 'table' end,
-    fn = function (x) return type(x) == 'function' end,
     thread = function (x) return type(x) == 'thread' end,
     userdata = function (x) return type(x) == 'userdata' end,
     array = function (x) return type(x) == 'table' and isArray(x) end,
     object = function (x) return type(x) == 'table' and not isArray(x) end
 }
+
+-- aliases
+MAP.fn = MAP['function']
+MAP.undefined = MAP['nil']
+MAP.defined = MAP['notnil']
 
 local addError = function(res, v_type, x, id)
     if res.ok then res.ok = false end

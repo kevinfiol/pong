@@ -1,5 +1,4 @@
 local GameObject = require 'engine.GameObject'
-local vars = require 'vars'
 
 local Ball = GameObject:extend()
 
@@ -23,6 +22,7 @@ function Ball:new(area, x, y, opts)
         y = 'number',
         width = 'number',
         height = 'number',
+        world = 'table|nil',
         vector = {
             x = 'number',
             y = 'number'

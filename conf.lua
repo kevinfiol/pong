@@ -1,28 +1,34 @@
 local vars = require 'vars'
-local inspect_fn = require 'lib.inspect'
-local typeok = require 'lib.typeok'
 
 -- DEBUG flag
--- Enabling this enables typeok + mishape checks
 DEBUG = true
 
 -- CLI breakpoint debugger
-debugger = require 'lib.debugger' -- uncomment to enable debugger
+if DEBUG then
+    local inspect_fn = require 'lib.inspect'
+    local typeok = require 'lib.typeok'
 
--- helper inspect function
-inspect = function(t) print(inspect_fn(t)) end
+    -- cli debugger
+    debugger = require 'lib.debugger'
 
--- typeok type checker
-types = function(t, map)
-    if not DEBUG then return end
-    local res = typeok(t, map)
-    if not res.ok then
-        local error_string = '[typeok]: Type Errors have occured:\n\t'
-        for _, v in ipairs(res.errors) do
-            error_string = error_string .. v .. '\n\t'
+    -- logger
+    log = require 'lib.log'
+
+    -- helper inspect function
+    inspect = function(t) print(inspect_fn(t)) end
+
+    -- typeok type checker
+    types = function(t, map)
+        if not DEBUG then return end
+        local res = typeok(t, map)
+        if not res.ok then
+            local error_string = '[typeok]: Type Errors have occured:\n\t'
+            for _, v in ipairs(res.errors) do
+                error_string = error_string .. v .. '\n\t'
+            end
+
+            error(error_string)
         end
-
-        error(error_string)
     end
 end
 

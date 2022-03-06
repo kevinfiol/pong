@@ -6,6 +6,8 @@ local GameObject = Object:extend()
 function GameObject:new(area, x, y)
     self.area = area
     self.x, self.y = x, y
+    self.width = 1
+    self.height = 1
     self.dead = false
 end
 
@@ -33,6 +35,10 @@ function GameObject:schema(schema, custom_map)
 
         error(error_string)
     end
+end
+
+function GameObject:middle()
+    return (self.x + self.width / 2), (self.y + self.height / 2)
 end
 
 return GameObject

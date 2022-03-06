@@ -77,10 +77,18 @@ local getUnitVector = function(x1, y1, x2, y2)
     return vector
 end
 
+local normalize = function(vector)
+    local magnitude = math.sqrt((vector.x * vector.x) + (vector.y * vector.y))
+    local x = vector.x / magnitude
+    local y = vector.y / magnitude
+    return { x = x, y = y }
+end
+
 return {
     random = random,
     collectGarbage = collectGarbage,
     pushRotate = pushRotate,
     pushRotateScale = pushRotateScale,
-    getUnitVector = getUnitVector
+    getUnitVector = getUnitVector,
+    normalize = normalize
 }

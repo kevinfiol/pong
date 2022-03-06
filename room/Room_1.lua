@@ -14,11 +14,15 @@ function Room_1:new()
             filter = { 'speed', 'vector' }
         },
         collider = {
-            filter = { 'x', 'y', 'height', 'width' }
+            filter = { 'collision' }
+        },
+        vectored = {
+            filter = { 'vector' }
         }
     }, {
         require 'systems.OffscreenDeath',
-        require 'systems.Collision'
+        require 'systems.Collision',
+        DEBUG and require 'systems.VectorDebug' or {}
     })
 
     self.canvas = love.graphics.newCanvas(vars.gw, vars.gh)

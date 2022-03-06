@@ -11,6 +11,7 @@ function Player:new(area, x, y, opts)
     opts = opts or {}
     Player.super.new(self, area, x, y, opts)
 
+    self.collision = { class = 'player' }
     self.input = baton.new({
         controls = {
             shoot = { 'mouse:1' }
@@ -18,7 +19,10 @@ function Player:new(area, x, y, opts)
     })
 
     self:schema({
-        input = 'table'
+        input = 'table',
+        collision = {
+            class = 'string'
+        }
     })
 end
 
@@ -38,7 +42,7 @@ function Player:shoot(dt)
     if self.input:pressed('shoot') then
         local x = self.x + self.width
         local y = self.y + (self.height / 2) - (Ball.static.HEIGHT / 2)
-        local vector_x, vector_y = lume.vector(0, 0.05)
+        local vector_x, vector_y = lume.vector(0, 1)
 
         self.area:queue({
             Ball(self.area, x, y, {

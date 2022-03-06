@@ -6,12 +6,16 @@ function Paddle:new(area, x, y, opts)
     opts = opts or {}
     Paddle.super.new(self, area, x, y)
 
+    self.collision = { class = 'paddle' }
     self.width = opts.width or 8
     self.height = opts.height or 28
 
     self:schema({
         width = 'number',
-        height = 'number'
+        height = 'number',
+        collision = {
+            class = 'string'
+        }
     })
 end
 

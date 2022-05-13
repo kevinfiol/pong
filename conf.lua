@@ -15,7 +15,8 @@ if DEBUG then
     log = require 'lib.log'
 
     -- helper inspect function
-    inspect = function(t) print(inspect_fn(t)) end
+    inspect = function(t) if type(t) == 'table' then print(inspect_fn(t)) else print(t) end end
+    p = inspect
 
     -- typeok type checker
     types = function(t, map)

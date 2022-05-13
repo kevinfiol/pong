@@ -1,6 +1,7 @@
 local lume = require 'lib.lume'
 local baton = require 'lib.baton'
 local vars = require 'vars'
+local Enum = require 'enum'
 
 local Paddle = require 'obj.Paddle'
 local Ball = require 'obj.Ball'
@@ -11,7 +12,7 @@ function Player:new(area, x, y, opts)
     opts = opts or {}
     Player.super.new(self, area, x, y, opts)
 
-    self.collision = { class = 'player' }
+    self.collision = { class = Enum.Collision.Class.Player }
     self.input = baton.new({
         controls = {
             shoot = { 'mouse:1' }

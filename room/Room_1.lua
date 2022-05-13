@@ -9,19 +9,9 @@ local Room_1 = Object:extend()
 local PADDLE_HEIGHT = 28
 
 function Room_1:new()
-    self.area = Area({
-        projectile = {
-            filter = { 'speed', 'vector' }
-        },
-        collider = {
-            filter = { 'collision' }
-        },
-        vectored = {
-            filter = { 'vector' }
-        }
-    }, {
+    self.area = Area(require 'systems.groups', {
         require 'systems.OffscreenDeath',
-        require 'systems.Collision',
+        require 'systems.BumpCollision',
         DEBUG and require 'systems.VectorDebug' or {}
     })
 

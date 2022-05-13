@@ -23,7 +23,7 @@ function GameObject:destroy()
 end
 
 function GameObject:schema(schema, custom_map)
-    if not DEBUG then return end -- define DEBUG global elsewhere
+    if not DEBUG then return end -- define DEBUG in conf.lua
     local validator = mishape(schema, custom_map)
 
     local res = validator(self)

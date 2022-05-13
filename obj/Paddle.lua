@@ -1,4 +1,5 @@
 local GameObject = require 'engine.GameObject'
+local Enum = require 'enum'
 
 local Paddle = GameObject:extend()
 
@@ -6,7 +7,7 @@ function Paddle:new(area, x, y, opts)
     opts = opts or {}
     Paddle.super.new(self, area, x, y)
 
-    self.collision = { class = 'paddle' }
+    self.collision = { class = Enum.Collision.Class.Projectile }
     self.width = opts.width or 8
     self.height = opts.height or 28
 

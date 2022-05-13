@@ -68,27 +68,9 @@ local random = function(min, max)
     return love.math.random() * (max - min) + min
 end
 
--- could also use lume.angle + lume.vector
-local getUnitVector = function(x1, y1, x2, y2)
-    local vector = { x = (x2 - x1), y = (y2 - y1) }
-    local magnitude = math.sqrt((vector.x * vector.x) + (vector.y * vector.y))
-    vector.x = vector.x / magnitude
-    vector.y = vector.y / magnitude
-    return vector
-end
-
-local normalize = function(vector)
-    local magnitude = math.sqrt((vector.x * vector.x) + (vector.y * vector.y))
-    local x = vector.x / magnitude
-    local y = vector.y / magnitude
-    return { x = x, y = y }
-end
-
 return {
     random = random,
     collectGarbage = collectGarbage,
     pushRotate = pushRotate,
-    pushRotateScale = pushRotateScale,
-    getUnitVector = getUnitVector,
-    normalize = normalize
+    pushRotateScale = pushRotateScale
 }

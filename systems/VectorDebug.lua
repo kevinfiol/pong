@@ -2,7 +2,7 @@ local Object = require 'lib.classic'
 
 local VectorDebug = Object:extend()
 
-local LINE_MAGNITUDE = 10
+local LINE_MAGNITUDE = 20
 
 function VectorDebug:init()
 end

@@ -18,7 +18,7 @@ if DEBUG then
     inspect = function(t) if type(t) == 'table' then print(inspect_fn(t)) else print(t) end end
     p = inspect
 
-    -- typeok type checker
+    -- typeok type checker (lib/typeok)
     types = function(t, map)
         if not DEBUG then return end
         local res = typeok(t, map)

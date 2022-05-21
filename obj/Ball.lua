@@ -22,7 +22,6 @@ function Ball:new(area, x, y, opts)
     self.height = opts.height or Ball.static.HEIGHT
     self.speed = opts.speed or Ball.static.SPEED
     self.vector = opts.vector or { x = 0, y = 0 }
-    p(self.vector)
 
     self:schema({
         x = 'number',
@@ -47,7 +46,11 @@ function Ball:update(dt)
         local cols
 
         -- check for any corrections from bump
-        x, y, cols = self.world:move(self, x, y, function(item, other)
+        x, y, cols = self.world:move(self, x, y, function(_, other)
+            if other.collision.class == Enum.Collision.Class.Projectile then
+                return false
+            end
+
             return 'bounce'
         end)
 
@@ -63,16 +66,11 @@ function Ball:update(dt)
             self.vector.x = v.x
             self.vector.y = v.y
 
-            if v.x == 0 or v.y == 0 then
-                local add_randomness = lume.randomchoice({ true, true, false })
-                if add_randomness then
-                    local weight = lume.random(-0.01, 0.01)
-                    if v.x == 0 then self.vector.x = v.x + weight end
-                    if v.y == 0 then self.vector.y = v.y + weight end
-
-                    p('randomness has been added')
-                    p(self.vector)
-                end
+            local add_randomness = lume.randomchoice({ true, false })
+            if add_randomness then
+                local weight = lume.random(-0.40, 0.40)
+                if v.x == 0 then self.vector.x = v.x + weight end
+                if v.y == 0 then self.vector.y = v.y + weight end
             end
         end
     end
@@ -92,6 +90,7 @@ function Ball:destroy()
     self.width = nil
     self.height = nil
     self.vector = nil
+    Ball.super.destroy(self)
 end
 
 return Ball

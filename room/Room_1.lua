@@ -2,6 +2,7 @@ local Object = require 'lib.classic'
 local Area = require 'engine.Area'
 local vars = require 'vars'
 
+local Walls = require 'elements.Walls'
 local Player = require 'obj.Player'
 local Paddle = require 'obj.Paddle'
 
@@ -25,7 +26,12 @@ function Room_1:new()
         height = PADDLE_HEIGHT
     })
 
-    self.area:queue({ player, paddle })
+    local walls = Walls(self.area)
+
+    self.area:queue({
+        player,
+        -- paddle
+    })
 end
 
 function Room_1:update(dt)

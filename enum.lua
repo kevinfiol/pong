@@ -6,7 +6,8 @@ return {
         Class = {
             Player = 'PLAYER',
             Paddle = 'PADDLE',
-            Projectile = 'PROJECTILE'
+            Projectile = 'PROJECTILE',
+            Wall = 'WALL'
         }
     }
 }

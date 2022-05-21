@@ -55,6 +55,7 @@ end
 
 function Player:destroy()
     self.input = nil
+    Player.super.destroy(self)
 end
 
 return Player

@@ -1,17 +1,19 @@
 local GameObject = require 'engine.GameObject'
 local Enum = require 'enum'
 
-local Paddle = GameObject:extend()
+local Wall = GameObject:extend()
 
-function Paddle:new(area, x, y, opts)
+function Wall:new(area, x, y, opts)
     opts = opts or {}
-    Paddle.super.new(self, area, x, y)
+    Wall.super.new(self, area, x, y)
 
-    self.collision = { class = Enum.Collision.Class.Paddle }
-    self.width = opts.width or 8
-    self.height = opts.height or 28
+    self.collision = { class = Enum.Collision.Class.Wall }
+    self.width = opts.width
+    self.height = opts.height
 
     self:schema({
+        x = 'number',
+        y = 'number',
         width = 'number',
         height = 'number',
         collision = {
@@ -20,10 +22,10 @@ function Paddle:new(area, x, y, opts)
     })
 end
 
-function Paddle:update(dt)
+function Wall:update(dt)
 end
 
-function Paddle:draw()
+function Wall:draw()
     love.graphics.rectangle(
         'line',
         self.x,
@@ -33,10 +35,11 @@ function Paddle:draw()
     )
 end
 
-function Paddle:destroy()
+function Wall:destroy()
     self.width = nil
     self.height = nil
-    Paddle.super.destroy(self)
+    self.collision = nil
+    Wall.super.destroy(self)
 end
 
-return Paddle
+return Wall

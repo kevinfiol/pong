@@ -15,7 +15,6 @@ function OffscreenDeath:update(dt)
             or e.y + e.height < 0
         then
             e.dead = true
-            p('dead')
         end
     end
 end

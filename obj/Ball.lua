@@ -10,7 +10,8 @@ Ball.static = {
     WIDTH = 6,
     HEIGHT = 6,
     SPEED = 3,
-    MAX_SPEED = 20
+    MAX_SPEED = 30,
+    SPEED_INCREMENT = 0.025
 }
 
 function Ball:new(area, x, y, opts)
@@ -22,6 +23,7 @@ function Ball:new(area, x, y, opts)
     self.height = opts.height or Ball.static.HEIGHT
     self.speed = opts.speed or Ball.static.SPEED
     self.vector = opts.vector or { x = 0, y = 0 }
+    self.onDestroy = opts.onDestroy or GameObject.static.noop
 
     self:schema({
         x = 'number',
@@ -29,6 +31,7 @@ function Ball:new(area, x, y, opts)
         width = 'number',
         height = 'number',
         world = 'table|nil',
+        onDestroy = 'function',
         collision = {
             class = 'string'
         },
@@ -60,17 +63,25 @@ function Ball:update(dt)
 
         -- check for collisions from bump
         if #cols > 0 then
-            self.speed = math.min(self.speed + 0.01, Ball.static.MAX_SPEED)
+            self.speed = math.min(self.speed + Ball.static.SPEED_INCREMENT, Ball.static.MAX_SPEED)
             local normal = cols[1].normal
             local v = vector.reflect(self.vector, normal)
             self.vector.x = v.x
             self.vector.y = v.y
 
-            local add_randomness = lume.randomchoice({ true, false })
+            local add_randomness = lume.randomchoice({ true, true, false })
             if add_randomness then
-                local weight = lume.random(-0.40, 0.40)
-                if v.x == 0 then self.vector.x = v.x + weight end
-                if v.y == 0 then self.vector.y = v.y + weight end
+                local weight = lume.random(-0.80, 0.80)
+
+                if v.x == 0 then
+                    self.vector.x = v.x + weight
+                elseif v.y == 0 then
+                    self.vector.y = v.y + weight
+                else
+                    weight = lume.random(-0.10, 0.10)
+                    local axis = lume.randomchoice({ 'x', 'y' })
+                    self.vector[axis] = v[axis] + weight
+                end
             end
         end
     end
@@ -87,6 +98,7 @@ function Ball:draw()
 end
 
 function Ball:destroy()
+    self.onDestroy()
     self.width = nil
     self.height = nil
     self.vector = nil

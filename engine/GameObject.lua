@@ -3,6 +3,10 @@ local mishape = require 'lib.mishape'
 
 local GameObject = Object:extend()
 
+GameObject.static = {
+    noop = function() end
+}
+
 function GameObject:new(area, x, y)
     self.area = area
     self.x, self.y = x, y
@@ -20,8 +24,22 @@ end
 function GameObject:destroy()
     self.dead = true
     self.area = nil
+
+    for k, _ in pairs(self) do
+        self[k] = nil
+    end
 end
 
+function GameObject:middle()
+    return (self.x + self.width / 2), (self.y + self.height / 2)
+end
+
+function GameObject:setPosition(pos)
+    if pos.x then self.x = pos.x end
+    if pos.y then self.y = pos.y end
+end
+
+-- debug methods
 function GameObject:schema(schema, custom_map)
     if not DEBUG then return end -- define DEBUG in conf.lua
     local validator = mishape(schema, custom_map)
@@ -35,10 +53,6 @@ function GameObject:schema(schema, custom_map)
 
         error(error_string)
     end
-end
-
-function GameObject:middle()
-    return (self.x + self.width / 2), (self.y + self.height / 2)
 end
 
 return GameObject

@@ -33,6 +33,14 @@ if DEBUG then
     end
 end
 
+-- Global Helpers
+bind = function(x, fn)
+    return function(...)
+        local args = {...}
+        return fn(x, (table.unpack or unpack)(args))
+    end
+end
+
 function love.conf(t)
     t.identity = nil                   -- The name of the save directory (string)
     t.version = "11.3"                -- The LÖVE version this game was made for (string)

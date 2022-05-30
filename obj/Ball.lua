@@ -78,7 +78,7 @@ function Ball:update(dt)
                 elseif v.y == 0 then
                     self.vector.y = v.y + weight
                 else
-                    weight = lume.random(-0.10, 0.10)
+                    weight = lume.random(-0.05, 0.05)
                     local axis = lume.randomchoice({ 'x', 'y' })
                     self.vector[axis] = v[axis] + weight
                 end
